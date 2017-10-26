@@ -5,7 +5,7 @@ import org.freeswitch.esl.ESLevent;
 
 public class esl {
     public static void main(String [] args) {
-        System.load("/home/esl2/libesljni.so");
+        System.load("/home/esl2/lib/libesljni.so");
 
         ESLconnection con = new ESLconnection("127.0.0.1","8021","ClueCon");
         ESLevent evt;
