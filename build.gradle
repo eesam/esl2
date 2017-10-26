@@ -1,0 +1,49 @@
+group 'com.huasky'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+mainClassName = 'com.huasky.esl'
+
+repositories {
+    mavenLocal()
+    maven
+            {
+                url "http://maven.aliyun.com/nexus/content/groups/public/"
+            }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'org.freeswitch', name: 'esl', version: '1.6.19'
+}
+
+jar {
+    String someString = ''
+    configurations.runtime.each {someString = someString + " lib//" + it.name}
+    manifest {
+        attributes 'Main-Class': 'com.huasky.esl'
+        attributes 'Class-Path': someString
+    }
+}
+
+//清除上次的编译过的文件
+task clearPj(type:Delete){
+    delete 'build','target'
+}
+
+task copyJar(type:Copy){
+    from configurations.runtime
+    into ('build/libs/lib')
+}
+
+//把JAR复制到目标目录
+task release(type: Copy,dependsOn: [build,copyJar]) {
+// from 'conf'
+// into ('build/libs/eachend/conf') // 目标位置
+}

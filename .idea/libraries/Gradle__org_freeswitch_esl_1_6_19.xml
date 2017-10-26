@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: org.freeswitch:esl:1.6.19">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/freeswitch/esl/1.6.19/esl-1.6.19.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
