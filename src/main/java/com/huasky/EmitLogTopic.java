@@ -9,6 +9,46 @@ public class EmitLogTopic {
 
     private static final String EXCHANGE_NAME = "freeswitch_topic";
     private static final String ROUTING_KEY = "freeswitch_event";
+    private Connection connection = null;
+    private Channel channel = null;
+
+    public void init() {
+        try {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.setVirtualHost("freeswitch_host");
+            factory.setHost("120.27.249.129");
+            factory.setUsername("freeswitch_client");
+            factory.setPassword("lFnQwWTDPx77ryF8");
+
+            connection = factory.newConnection();
+            channel = connection.createChannel();
+            channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void finish() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (Exception ignore) {
+            }
+        }
+    }
+
+    public void send(String message) {
+        try {
+            if (message == null) {
+                System.out.println(" [x] Sent null");
+                return;
+            }
+            System.out.println(" [x] Sent '" + ROUTING_KEY + "':'" + message + "'");
+            channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, null, message.getBytes("UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] argv) {
         Connection connection = null;
