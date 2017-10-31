@@ -11,11 +11,12 @@ public class esl {
         ESLevent evt;
 
         if (con.connected() == 1) System.out.println("connected");
-        con.events("plain","all");
+//        con.events("plain","all");
+        con.events("json","CHANNEL_CREATE CHANNEL_DESTROY CHANNEL_ANSWER CHANNEL_HANGUP CHANNEL_HANGUP_COMPLETE CHANNEL_BRIDGE CHANNEL_UNBRIDGE");
 
         while (con.connected() == 1) {
             evt = con.recvEvent();
-            System.out.println(evt.serialize("plain"));
+            System.out.println(evt.serialize("json"));
         }
     }
 }
